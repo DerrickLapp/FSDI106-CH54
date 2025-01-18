@@ -6,6 +6,8 @@ main{
 #list{
     background-color: aqua;
     flex: 6;
+    padding: 1rem;
+
 }
 
 #form{
@@ -13,6 +15,14 @@ main{
     flex: 6;
     padding: 1rem;
 
+}
+
+/**Section A**/
+
+.task{
+    margin: 10px 20px;
+    padding: 10px;
+    display: flex;
 }
 
 /**Form**/

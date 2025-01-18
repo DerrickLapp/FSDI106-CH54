@@ -11,21 +11,9 @@
 
     <main>
         <section id="list">Section A
-            <table class="table savedTasks">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Color(Hex Code)</th>
-                        <th scope="col">Start Date</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Budget</th>
-                    </tr>
-                </thead>
-                <tbody id="taskRows">
-                </tbody>
-            </table>
+            <div class="pending-tasks">
+
+            </div>
         </section>
         <section id="form">Section B
             <div class="mt-3 bottomLine">
@@ -52,10 +40,10 @@
                 <label class="form-label">Status</label>
                 <select id="selStatus">
                     <option value="">--Select an Option--</option>
-                    <option value="notStarted">Not Yet Started</option>
-                    <option value="inProgress">In Progress</option>
-                    <option value="completed">Complete</option>
-                    <option value="canceled">Canceled</option>
+                    <option value="Not Started">Not Yet Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Complete</option>
+                    <option value="Canceled">Canceled</option>
                 </select>
                 <small id="statusRequirement">**This field is required.</small>
             </div>
@@ -78,6 +66,7 @@
 
 
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="./scripts/task.js"></script>
     <script src="./scripts/app.js"></script>
 </body>
 </html>

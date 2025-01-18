@@ -1,16 +1,4 @@
-//Empty Array
-let tasks = [];
 
-//build an object
-//object constructor
-function taskObject(title,descript,color,stDate,status,budget){
-    this.title = title;
-    this.descript = descript;
-    this.color = color;
-    this.stDate = stDate;
-    this.status = status;
-    this.budget = budget;
-}
 //Validations
 function validTask(task){
     let validTitle = true;
@@ -81,25 +69,47 @@ function validTask(task){
 //get Task sent into tasks array
 function saveTask(){
     // Input fields
-    let txtTitle = document.getElementById("txtTitle");
-    let txtDescript = document.getElementById("txtDescript");
-    let selColor = document.getElementById("selColor");
-    let selDate = document.getElementById("selDate");
-    let selStatus = document.getElementById("selStatus");
-    let numBudget = document.getElementById("numBudget");
-    let newTask = new taskObject(txtTitle.value,txtDescript.value,selColor.value,selDate.value,selStatus.value,numBudget.value);
+    const title = $("#txtTitle").val();
+    const descript = $("#txtDescript").val();
+    const color = $("#selColor").val();
+    const stDate = $("#selDate").val();
+    const status = $("#selStatus").val();
+    const budget = $("#numBudget").val();
+
     
-    //create the object
-    if(validTask(newTask)){
-        tasks.push(newTask);
-        console.log(tasks);
-        console.log("Saving Task");
-        $("#btn-notification").fadeIn().delay(1000).fadeOut();
-        clearTaskForm(); 
-        getTasks();
-    }
+    //build an object
+    let taskToSave = new Task (title,descript,color,stDate,status,budget);//Task class is on task.js
 
 
+    //Confirm Validation and push taskToSave
+    // if(validTask(newTask)){
+    //     console.log("Saving Task");
+    //     $("#btn-notification").fadeIn().delay(1000).fadeOut();
+    //     clearTaskForm(); 
+        
+    // }
+
+    //save to server
+    
+    //display the data received from server
+    displayTask(taskToSave);
+}
+
+function displayTask(task){
+    let syntax = `
+    <h3> Hello, I'm a task</h3>
+    <div class = "task">
+        <div> 
+            <h3 class = "info">Task Title: ${task.title}</h3>
+            <p> Description: ${task.descript}</p>
+        </div>
+        <label class = "status">Status: ${task.status}</label>
+        <div class = "date-budget">
+            <h3>Start Date: ${task.stDate}</h3>
+            <h3>Budget: ${task.budget}</h3>
+        </div>
+    </div>`;
+    $(".pending-tasks").append(syntax);
 }
 
 //clear form
@@ -111,35 +121,21 @@ function clearTaskForm(){
     $("#selStatus").val("");
     $("#numBudget").val("");
 }
-//save to server
 
-//display the data received from server
-function getTasks(){
-    let result="";
-
-    for(let i=0;i<tasks.length;i++){
-        let task = tasks[i];
-        result += `
-        <tr id="${i}">
-            <th scope="row">${i+1}</th>
-            <td>${task.title}</td>
-            <td>${task.descript}</td>
-            <td>${task.color}</td>
-            <td>${task.stDate}</td>
-            <td>${task.status}</td>
-            <td>$ ${task.budget}</td>
-        </tr>
-    `
-    }   
-    $("#taskRows").append(result);
-
+function testFunction(){
+    $.ajax({
+        type:"get",
+        url: "http://fsdiapi.azurewebsites.net",
+        success: function(response){
+            console.log(respone);
+        },
+        error: function(error){
+            console.log(error);
+        },
+        
+        
+    });
 }
-
-    
-    
-    
-    
-
 
 function init(){
     console.log("init");
@@ -150,8 +146,6 @@ function init(){
 
 
 }
-
-
 
 
 
