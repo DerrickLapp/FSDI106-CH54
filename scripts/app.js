@@ -81,34 +81,41 @@ function saveTask(){
     let taskToSave = new Task (title,descript,color,stDate,status,budget);//Task class is on task.js
 
 
-    //Confirm Validation and push taskToSave
-    // if(validTask(newTask)){
-    //     console.log("Saving Task");
-    //     $("#btn-notification").fadeIn().delay(1000).fadeOut();
-    //     clearTaskForm(); 
-        
-    // }
+    // Confirm Validation and push taskToSave
+    if(validTask(taskToSave)){
+        console.log("Saving Task");
+        //save to server
+        $.ajax({
+            type: "POST",
+            url: "http://fsdiapi.azurewebsites.net/api/tasks/",
+            data: JSON.stringify(taskToSave),
+            contentType: "application/json",
+            success: function(response){
+                console.log(response);
+            },
+            error: function(error){
+                console.log(error);  
+            }
+        })
+        $("#btn-notification").fadeIn().delay(1000).fadeOut();  
+        loadTask();      
+    }
 
-    //save to server
-    
     //display the data received from server
-    displayTask(taskToSave);
+    // displayTask(taskToSave); OLD Task Display
+    $(".pending-tasks").empty();
+    clearTaskForm();
 }
 
 function displayTask(task){
     let syntax = `
-    <h3> Hello, I'm a task</h3>
-    <div class = "task">
-        <div> 
-            <h3 class = "info">Task Title: ${task.title}</h3>
-            <p> Description: ${task.descript}</p>
-        </div>
-        <label class = "status">Status: ${task.status}</label>
-        <div class = "date-budget">
-            <h3>Start Date: ${task.stDate}</h3>
-            <h3>Budget: ${task.budget}</h3>
-        </div>
-    </div>`;
+    <tr class = "task table-info">
+        <td scope = "row">${task.title}</td>
+        <td>${task.descript}</td>
+        <td>${task.status}</td>
+        <td>${task.stDate}</td>
+        <td>$ ${task.budget}</td>
+    </tr>`;
     $(".pending-tasks").append(syntax);
 }
 
@@ -132,18 +139,35 @@ function testFunction(){
         error: function(error){
             console.log(error);
         },
-        
-        
     });
 }
 
-function init(){
-    console.log("init");
-    //load data
+function loadTask(){
+    $.ajax({
+        type: "GET",
+        url: "http://fsdiapi.azurewebsites.net/api/tasks",
+        success: function(response){
+            console.log(response);
+            let data = JSON.parse(response)
+            console.log(data);
+            for (let i=0;i<data.length;i++){
+                let task =data[i];
+                if(task.name=="DerrickLapp"){
+                    displayTask(task);
+                }
+            }
+        },
+        error: function(error){
+            console.log(error);
+        }
+    })
+}
 
+function init(){
+    //load data
+    loadTask();
     //hook events
     $("#btnSave").click(saveTask);
-
 
 }
 

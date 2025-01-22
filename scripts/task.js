@@ -1,5 +1,5 @@
 class Task{
-    constructor(title, descript, color, stDate, status, budget)
+    constructor(title, descript, color, stDate, status, budget,)
     {
         this.title = title;
         this.descript = descript;
@@ -7,5 +7,7 @@ class Task{
         this.stDate = stDate;
         this.status = status;
         this.budget = budget;
+        this.name = "DerrickLapp";
     }
 }
+
